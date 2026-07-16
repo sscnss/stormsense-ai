@@ -1,0 +1,32 @@
+[
+  {
+    "source": "Demo Weather Agency",
+    "observed_at": "2026-07-16T00:00:00Z",
+    "title": "Typhoon Kestrel moving northwest",
+    "content": "Synthetic bulletin: Typhoon Kestrel is moving northwest over the western Pacific. Outer rainbands may affect the Miyako and Yaeyama Islands during the next demonstration period.",
+    "wind_kph": 126,
+    "pressure_hpa": 960,
+    "latitude": 20.8,
+    "longitude": 129.5
+  },
+  {
+    "source": "Demo Satellite Desk",
+    "observed_at": "2026-07-16T03:00:00Z",
+    "title": "Cloud structure becomes more organized",
+    "content": "Synthetic satellite interpretation: convection has become more symmetric. The system remains southeast of Okinawa and east of Taiwan.",
+    "wind_kph": 137,
+    "pressure_hpa": 952,
+    "latitude": 21.5,
+    "longitude": 128.7
+  },
+  {
+    "source": "Demo Emergency Bulletin",
+    "observed_at": "2026-07-16T05:30:00Z",
+    "title": "Preparedness messaging for island communities",
+    "content": "Synthetic preparedness notice: residents in the Miyako and Yaeyama Islands should review transport updates, secure outdoor items, and follow official local guidance. Rough seas are possible in exposed waters.",
+    "wind_kph": null,
+    "pressure_hpa": null,
+    "latitude": null,
+    "longitude": null
+  }
+]

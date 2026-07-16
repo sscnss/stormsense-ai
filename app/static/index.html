@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="StormSense AI hackathon typhoon-risk synthesis demo">
+  <title>StormSense AI</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">AI-assisted storm intelligence prototype</p>
+        <h1>StormSense AI</h1>
+        <p class="lede">Turn fragmented storm bulletins into a clear, structured risk summary.</p>
+      </div>
+      <div id="system-status" class="status-pill">Checking system…</div>
+    </header>
+
+    <section class="notice" aria-label="Safety notice">
+      <strong>Prototype only.</strong> This dashboard uses synthetic demonstration data and does not replace official meteorological or emergency warnings.
+    </section>
+
+    <section class="controls">
+      <label class="toggle">
+        <input id="use-ai" type="checkbox" checked>
+        <span>Use GPT-5.6 when configured</span>
+      </label>
+      <button id="analyze-button" type="button">Generate risk summary</button>
+    </section>
+
+    <section id="loading" class="panel hidden" aria-live="polite">Analyzing source updates…</section>
+    <section id="error" class="panel error hidden" role="alert"></section>
+
+    <section id="result" class="result-grid hidden" aria-live="polite">
+      <article class="panel summary-card">
+        <div class="summary-topline">
+          <span id="severity" class="severity">—</span>
+          <span id="mode" class="mode">—</span>
+        </div>
+        <h2 id="headline">—</h2>
+        <p id="summary">—</p>
+        <dl class="metadata">
+          <div><dt>Storm</dt><dd id="storm-name">—</dd></div>
+          <div><dt>Sources</dt><dd id="source-count">—</dd></div>
+          <div><dt>Model</dt><dd id="model-used">—</dd></div>
+        </dl>
+      </article>
+
+      <article class="panel">
+        <h3>Key changes</h3>
+        <ul id="key-changes"></ul>
+      </article>
+
+      <article class="panel">
+        <h3>Affected areas mentioned</h3>
+        <ul id="affected-areas"></ul>
+      </article>
+
+      <article class="panel">
+        <h3>Recommended actions</h3>
+        <ul id="recommended-actions"></ul>
+      </article>
+
+      <article class="panel sources-card">
+        <h3>Source updates</h3>
+        <div id="sources"></div>
+      </article>
+
+      <p id="disclaimer" class="disclaimer"></p>
+    </section>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
