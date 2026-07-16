@@ -32,6 +32,18 @@ class AnalysisRequest(BaseModel):
     use_ai: bool = True
 
 
+class AIAlertContent(BaseModel):
+    """Schema requested directly from the OpenAI Responses API."""
+
+    storm_name: str = Field(min_length=1, max_length=120)
+    severity: Literal["low", "moderate", "high", "extreme"]
+    headline: str = Field(min_length=1, max_length=240)
+    summary: str = Field(min_length=1, max_length=2000)
+    key_changes: list[str] = Field(min_length=1, max_length=10)
+    affected_areas: list[str] = Field(min_length=1, max_length=20)
+    recommended_actions: list[str] = Field(min_length=1, max_length=10)
+
+
 class AlertAnalysis(BaseModel):
     storm_name: str
     generated_at: datetime

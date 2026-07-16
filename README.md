@@ -41,7 +41,7 @@ GPT-5.6 is the optional reasoning and synthesis layer. When enabled, it receives
 - Generate practical, non-alarmist recommended actions
 - Preserve a clear warning that official authorities remain authoritative
 
-The default model is the `gpt-5.6` alias. The application never exposes the API key to the browser. If the API is unavailable or returns invalid output, the backend automatically uses deterministic fallback analysis.
+The default model is the `gpt-5.6` alias. The backend calls `client.responses.parse(...)` with a Pydantic schema so the Responses API returns a validated structured alert. The application never exposes the API key to the browser. If the API is unavailable or returns invalid output, the backend automatically uses deterministic fallback analysis.
 
 ## Architecture
 

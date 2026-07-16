@@ -10,7 +10,7 @@ from typing import Any
 
 
 from app.config import settings
-from app.models import AlertAnalysis, WeatherUpdate
+from app.models import AIAlertContent, AlertAnalysis, WeatherUpdate
 
 logger = logging.getLogger(__name__)
 
@@ -129,14 +129,6 @@ def deterministic_analysis(updates: list[WeatherUpdate]) -> AlertAnalysis:
     )
 
 
-def _clean_json_text(text: str) -> str:
-    text = text.strip()
-    if text.startswith("```"):
-        text = re.sub(r"^```(?:json)?\s*", "", text)
-        text = re.sub(r"\s*```$", "", text)
-    return text.strip()
-
-
 def _ai_payload(updates: list[WeatherUpdate]) -> str:
     payload: list[dict[str, Any]] = [
         item.model_dump(mode="json") for item in sorted(updates, key=lambda item: item.observed_at)
@@ -168,23 +160,26 @@ Use calm, practical language. Explicitly distinguish uncertainty and mention tha
 Do not include Markdown fences or any text outside the JSON object.
 """.strip()
 
-    response = client.responses.create(
+    response = client.responses.parse(
         model=settings.openai_model,
         reasoning={"effort": settings.openai_reasoning_effort},
         instructions=instructions,
         input=f"Analyze these normalized synthetic/demo updates:\n{_ai_payload(updates)}",
+        text_format=AIAlertContent,
     )
-    parsed = json.loads(_clean_json_text(response.output_text))
+    parsed = response.output_parsed
+    if parsed is None:
+        raise ValueError("The model did not return a structured alert")
 
     return AlertAnalysis(
-        storm_name=str(parsed["storm_name"]),
+        storm_name=parsed.storm_name,
         generated_at=datetime.now(UTC),
-        severity=str(parsed["severity"]).lower(),
-        headline=str(parsed["headline"]),
-        summary=str(parsed["summary"]),
-        key_changes=[str(item) for item in parsed["key_changes"]],
-        affected_areas=[str(item) for item in parsed["affected_areas"]],
-        recommended_actions=[str(item) for item in parsed["recommended_actions"]],
+        severity=parsed.severity,
+        headline=parsed.headline,
+        summary=parsed.summary,
+        key_changes=parsed.key_changes,
+        affected_areas=parsed.affected_areas,
+        recommended_actions=parsed.recommended_actions,
         source_count=len(updates),
         model_used=settings.openai_model,
         mode="ai",
